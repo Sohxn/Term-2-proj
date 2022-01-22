@@ -1,42 +1,45 @@
 #libraries 
+from distutils import command
+import imp
+from random import choice
 from tkinter import *
 from tkinter import ttk
 from tkinter import font
-
+from xml.sax.handler import feature_external_ges
+import data
 
 limegreen = "#add160"
 
 
-
+freshlist = []
 #definitions
 def login():
-
+    total = 0
+    
     def modeselected(modechoice):
         modechoice = trans_select.get()
-        if modechoice == transport[0]:
-            print("Air selected")
-        elif modechoice == transport[1]:
-            print("Rail selected")
-        elif modechoice == transport[2]:
-            print("Road selected")
+        freshlist.append(modechoice)
+
+        
+        
+       
 
     def adddestination(choice_des):
         choice_des = des_select.get()
+        freshlist.append(choice_des)
+        
     
 
     def addplace(choice_place):
         choice_place = stay_select.get()
+        freshlist.append(choice_place)
 
     #for storing user details in database 
-    freshlist = []
+    
     tname = username.get()
     temail = useremail.get()
     tphone = userphone.get()
-    print(tname , temail , tphone)
-    freshlist.append(tname) 
-    freshlist.append(temail)
-    freshlist.append(tphone)
-    freshlist.clear()
+    data.fill_user(tname , temail , tphone)
 
     #clearing data 
     tname = ""
@@ -56,6 +59,20 @@ def login():
     stay_select = StringVar()
 
    
+     
+    
+    #-------------RECEIPT--------------
+    def gen():
+        print(freshlist)
+        if freshlist[1] == 'AIR':
+            data.fetch_airfare(freshlist[0])
+           
+        elif freshlist[1] == 'RAIL':
+            return
+            
+        elif freshlist[1] == 'ROAD':
+            return
+           
    
     
 
@@ -83,6 +100,9 @@ def login():
     stay.place(x=50 , y = 25)
     staysel = OptionMenu(f3 , stay_select,*placeofstay , command= addplace)
     staysel.place(x=50 , y =70,width=200)
+
+    genbutton = Button(f3 , text="GO////>" , font=("Calibri",21) , background= limegreen , command = gen)
+    genbutton.place(x = 50 , y=110)
 
 
     
@@ -131,20 +151,17 @@ loginbutton = Button(mainf , text="Login" , background="gray",command = login).p
 
 
 
-# -------------------------------------- CONNECTING MYSQL DATABASE -----------------------------------------
+# -------------------------------------- DATA ACCESS -----------------------------------------
 #filling drop down with data
-destinations=["kolkata" , "delhi"]
-placeofstay = ["kolkata" , "delhi"]
-transport = ["kolkata" , "delhi"]
+destinations= data.fetch_cities()
+placeofstay = data.fetch_hotels()
+transport = ["AIR" , "RAIL" , "ROAD"]
 
 
 
 
-
-#calculation and receipt generation
 
 
 root.mainloop()
-
 
 
