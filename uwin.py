@@ -1,10 +1,9 @@
-#libraries 
-from code import compile_command
+#libraries
 from random import choice
 from tkinter import *
 from tkinter import ttk
 from tkinter import font
-import data
+import data #the backend python file made for accessing data from the MYSQL database
 
 limegreen = "#add160"
 
@@ -33,12 +32,9 @@ def login():
         choice_place = stay_select.get()
         freshlist.append(choice_place)
 
-    #for storing user details in database 
     
-    tname = username.get()
-    temail = useremail.get()
-    tphone = userphone.get()
-    data.fill_user(tname , temail , tphone)
+    
+   
 
     #clearing data 
     tname = ""
@@ -90,7 +86,7 @@ def login():
 
         #--------CALCULATION--------
         heads = headentry.get()
-        tax = 69420
+        tax = 2500
         headcount = int(heads)  
         fares = airfare + railfare + roadfare
         hotelexp = int(cost) 
@@ -120,21 +116,21 @@ def login():
         title = Label(text="-------------Receipt-------------",font=("Calibri",16) )
         title.place(x = 150, y = 100)
         title = Label(text="Amount:        ",font=("Calibri",16) )
-        title.place(x = 110, y = 150)
+        title.place(x = 170, y = 150)
         amount = Label(text= str(costlist[0]),font=("Calibri",16) )
-        amount.place(x = 200 , y =150)
+        amount.place(x = 300 , y =150)
         title = Label(text="Taxes:        ",font=("Calibri",16) )
-        title.place(x = 110, y = 190)
-        amount = Label(text= "69420",font=("Calibri",16) )
-        amount.place(x = 200 , y =190)
-        lines = Label(text="--------------------")
-        lines.place(x=200,y=220)
+        title.place(x = 170, y = 190)
+        amount = Label(text= "2500",font=("Calibri",16) )
+        amount.place(x = 300 , y =190)
+        lines = Label(text="--------------")
+        lines.place(x=300,y=220)
         line1 = Label(text="--------------------")
         line1.place(x=140,y=220)
-        grand = Label(text="Grand total:        ",font=("Calibri",16) )
-        grand.place(x = 110, y = 240)
+        grand = Label(text="Grand total:   ",font=("Calibri",16) )
+        grand.place(x = 150, y = 240)
         amount = Label(text= str(costlist[1]),font=("Calibri",16) )
-        amount.place(x = 200 , y =240)
+        amount.place(x = 300 , y =240)
         
             
            
@@ -228,12 +224,4 @@ destinations= data.fetch_cities()
 placeofstay = data.fetch_hotels()
 transport = ["AIR" , "RAIL" , "ROAD"]
 
-
-
-
-
-
 root.mainloop()
-
-
-
