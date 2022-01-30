@@ -1,20 +1,19 @@
 #libraries 
-from distutils import command
-import imp
+from code import compile_command
 from random import choice
 from tkinter import *
 from tkinter import ttk
 from tkinter import font
-from xml.sax.handler import feature_external_ges
 import data
 
 limegreen = "#add160"
 
 
 freshlist = []
+costlist = []
 #definitions
 def login():
-    total = 0
+    
     
     def modeselected(modechoice):
         modechoice = trans_select.get()
@@ -51,27 +50,93 @@ def login():
     #move on to booking window
     bw = Tk()
     bw.geometry('700x700')
-    bw.title('Book A Trip')
+    bw.title('Travel Plan')
     bw.iconbitmap('icon.ico')
 
     des_select = StringVar()
     trans_select = StringVar()
     stay_select = StringVar()
+    
 
-   
+    
      
     
     #-------------RECEIPT--------------
+    
     def gen():
         print(freshlist)
+        airfare = 0
+        railfare = 0
+        roadfare = 0
+        hotelexp = 0
+        #transport
         if freshlist[1] == 'AIR':
-            data.fetch_airfare(freshlist[0])
+            a = data.fetch_airfare(freshlist[0])
+            airfare = a[0][0]
+            
            
         elif freshlist[1] == 'RAIL':
-            return
+            b = data.fetch_railfare(freshlist[0])
+            railfare = b[0][0]
+            
             
         elif freshlist[1] == 'ROAD':
-            return
+            c = data.fetch_roadfare(freshlist[0])
+            roadfare = c[0][0]
+            
+        #hotels
+        d = data.fetch_hotelexp(freshlist[2])
+        cost = d[0][0]
+
+        #--------CALCULATION--------
+        heads = headentry.get()
+        tax = 69420
+        headcount = int(heads)  
+        fares = airfare + railfare + roadfare
+        hotelexp = int(cost) 
+        totalfare = fares * headcount
+        sumtotal = hotelexp + totalfare 
+        grandtotal = sumtotal + tax
+        costlist.append(sumtotal)
+        costlist.append(grandtotal)
+        print("TOTAL: \n  ",sumtotal)
+
+        #call the function to generate the receipt page
+        receipt()
+
+        
+    def receipt():
+        bw.destroy()
+        rt = Tk()
+        rt.geometry('500x600')
+        rt.title('Receipt')
+        rt.iconbitmap('icon.ico')
+
+
+         
+        tymsg = Label(text = "THANK YOU FOR USING OUR SERVICES",font=("Calibri",18))
+        tymsg.place(x = 80 ,y=30)
+
+        title = Label(text="-------------Receipt-------------",font=("Calibri",16) )
+        title.place(x = 150, y = 100)
+        title = Label(text="Amount:        ",font=("Calibri",16) )
+        title.place(x = 110, y = 150)
+        amount = Label(text= str(costlist[0]),font=("Calibri",16) )
+        amount.place(x = 200 , y =150)
+        title = Label(text="Taxes:        ",font=("Calibri",16) )
+        title.place(x = 110, y = 190)
+        amount = Label(text= "69420",font=("Calibri",16) )
+        amount.place(x = 200 , y =190)
+        lines = Label(text="--------------------")
+        lines.place(x=200,y=220)
+        line1 = Label(text="--------------------")
+        line1.place(x=140,y=220)
+        grand = Label(text="Grand total:        ",font=("Calibri",16) )
+        grand.place(x = 110, y = 240)
+        amount = Label(text= str(costlist[1]),font=("Calibri",16) )
+        amount.place(x = 200 , y =240)
+        
+            
            
    
     
@@ -101,8 +166,14 @@ def login():
     staysel = OptionMenu(f3 , stay_select,*placeofstay , command= addplace)
     staysel.place(x=50 , y =70,width=200)
 
-    genbutton = Button(f3 , text="GO////>" , font=("Calibri",21) , background= limegreen , command = gen)
+    genbutton = Button(f3 , text="Good To Go" , font=("Calibri",21) , background= limegreen , command = gen)
     genbutton.place(x = 50 , y=110)
+
+    headtext = Label(f3 , text="No. of heads",font=("Calibri",18) ,  background=limegreen)
+    headtext.place(x = 420 , y = 40)
+
+    headentry = Entry(f3 ,background=limegreen , )
+    headentry.place(x  = 420 , y = 80)
 
 
     
@@ -163,5 +234,6 @@ transport = ["AIR" , "RAIL" , "ROAD"]
 
 
 root.mainloop()
+
 
 
