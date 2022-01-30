@@ -9,7 +9,7 @@ try:
         host='localhost', 
         database='travel_details',
         user='root',
-        password= 'Bobo1403_2004',
+        password= '12340987',
        
     )
     print("CONNECTION ESTABLISHED")
@@ -67,7 +67,7 @@ try:
 
     
 except:
-    print("ERROR //^~^//")
+    return
 
 
 
