@@ -1,6 +1,7 @@
 import mysql.connector as sql
-import os 
-key = 'password'
+import os
+
+
 #attempting to connect to server
 try:
     
@@ -40,19 +41,25 @@ try:
 
     def fetch_airfare(city):
         cursor2 = con.cursor()
-        cursor2.execute("SELECT AIR FROM dest_cities WHERE NAME = "+city+";")
+        cursor2.execute("select AIR from dest_cities where name = "+"'"+city+"'"+";") 
         return(cursor2.fetchall())
         
     
     def fetch_railfare(city):
         cursor3 = con.cursor()
-        cursor3.execute("SELECT RAIL FROM dest_cities WHERE NAME = ",city)
+        cursor3.execute("select RAIL from dest_cities where name = "+"'"+city+"'"+";") 
+        return(cursor3.fetchall())
         
     
     def fetch_roadfare(city):
         cursor4 = con.cursor()
-        cursor4.execute("SELECT ROAD FROM dest_cities WHERE NAME = ",city)
+        cursor4.execute("select ROAD from dest_cities where name = "+"'"+city+"'"+";") 
+        return(cursor4.fetchall())
 
+    def fetch_hotelexp(hot):
+        cursor5 = con.cursor()
+        cursor5.execute("select cost from hotels where name ="+"'"+hot+"'"+";")
+        return(cursor5.fetchall())
         
 
 
@@ -61,6 +68,7 @@ try:
     
 except:
     print("ERROR //^~^//")
+
 
 
 
