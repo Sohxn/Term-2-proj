@@ -1,8 +1,6 @@
 #libraries
-from random import choice
+
 from tkinter import *
-from tkinter import ttk
-from tkinter import font
 import data #the backend python file made for accessing data from the MYSQL database
 
 limegreen = "#add160"
