@@ -1,5 +1,5 @@
 # Term-2-proj
-1.uwin.py will generate the Tkinter GUI ( Tkinter gae who even works with Tkinter) 
+1.uwin.py will generate the Tkinter GUI 
 2.data.py is created to access data from the MYSQL database 
 
 
